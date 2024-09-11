@@ -14,8 +14,8 @@ BATCH_SIZE = 50
 
 # 環境の生成 
 trigger = lambda t: t % 100 == 0 
-env = RecordVideo(gym.make('CartPole-v1', render_mode="rgb_array"), './video/', episode_trigger=trigger)
-# env = gym.make('CartPole-v1', render_mode="rgb_array")
+env = RecordVideo(gym.make('CartPole-v0', render_mode="rgb_array"), './video/', episode_trigger=trigger)
+# env = gym.make('CartPole-v0', render_mode="rgb_array")
 
 main_Q_net = nn.Sequential(
     nn.Linear(env.observation_space.shape[0], 100), nn.ReLU(),
@@ -97,7 +97,7 @@ for episode in range(801):
         loss = loss_fn(prev_action_q_batch, torch.FloatTensor(target_q_batch))
         loss.backward()
         optimiser.step()
-        print(loss.item())
+        print('loss', loss.item())
       
     prev_observation = copy.deepcopy(observation)
     
